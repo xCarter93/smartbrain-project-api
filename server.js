@@ -14,11 +14,13 @@ const image = require("./conrollers/image");
 const db = knex({
   client: "pg",
   connection: {
-    host: "127.0.0.1",
+    ssl: { rejectUnauthorized: false },
+    connectionString: process.env.POSTGRES_URL,
+    host: process.env.POSTGRES_HOST,
     port: 5432,
-    user: "postgres",
-    password: "",
-    database: "smart-brain",
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PW,
+    database: process.env.POSTGRES_DB,
   },
 });
 
