@@ -28,6 +28,7 @@ const handleApiCall = (req, res) => {
     },
     body: raw,
   };
+  console.log(data);
 
   fetch(`https://api.clarifai.com/v2/models/face-detection/outputs`, data)
     .then((data) => data.json())
