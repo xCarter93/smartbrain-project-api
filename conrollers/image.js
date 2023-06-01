@@ -1,3 +1,5 @@
+const axios = require("axios");
+
 const handleApiCall = (req, res) => {
   const PAT = process.env.CLARIFAI_PAT;
   const USER_ID = "xcarter93";
@@ -20,27 +22,26 @@ const handleApiCall = (req, res) => {
     ],
   });
 
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      Authorization: "Key " + PAT,
-    },
-    body: raw,
-  };
+  // const requestOptions = {
+  //   method: "POST",
+  //   headers: {
+  //     Accept: "application/json",
+  //     Authorization: "Key " + PAT,
+  //   },
+  //   body: raw,
+  // };
 
-  fetch(
-    `https://api.clarifai.com/v2/models/face-detection/outputs`,
-    requestOptions
-  )
-    .then((response) => response.text())
-    .then((result) => {
-      console.log(result);
-      res.json(result);
+  axios
+    .post(`https://api.clarifai.com/v2/models/face-detection/outputs`, raw, {
+      headers: {
+        Accept: "application/json",
+        Authorization: "Key " + PAT,
+      },
     })
-    .catch((err) => {
-      res.status(400).json("Unable to complete request");
-    });
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((err) => res.status(400).json("unable to work with api"));
 };
 
 const handleImage = (req, res, db) => {
@@ -58,6 +59,6 @@ const handleImage = (req, res, db) => {
 };
 
 module.exports = {
-  handleImage: handleImage,
-  handleApiCall: handleApiCall,
+  handleApiCall,
+  handleImage,
 };
