@@ -20,7 +20,7 @@ const handleApiCall = (req, res) => {
     ],
   });
 
-  const data = {
+  const requestOptions = {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -28,13 +28,15 @@ const handleApiCall = (req, res) => {
     },
     body: raw,
   };
-  console.log(data);
 
-  fetch(`https://api.clarifai.com/v2/models/face-detection/outputs`, data)
-    .then((data) => data.json())
-    .then((data) => {
-      console.log(data);
-      res.json(data);
+  fetch(
+    `https://api.clarifai.com/v2/models/face-detection/outputs`,
+    requestOptions
+  )
+    .then((response) => response.text())
+    .then((result) => {
+      console.log(result);
+      res.json(result);
     })
     .catch((err) => {
       res.status(400).json("Unable to complete request");
