@@ -57,4 +57,4 @@ app.listen(5000, () => {
 	console.log("App is running...");
 });
 
-export default app;
+module.exports = app;
